@@ -48,29 +48,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\Base\BaseTableConfiguration.cs" />
+    <Compile Include="Configurations\Base\WithNameTableConfiguration.cs" />
     <Compile Include="Configurations\CitiesTableConfiguration.cs" />
+    <Compile Include="Configurations\ContactsTableConfiguration.cs" />
+    <Compile Include="Configurations\ContactTypesTableConfiguration.cs" />
     <Compile Include="Configurations\CountriesTableConfigurations.cs" />
+    <Compile Include="Configurations\EventImagesTableConfiguration.cs" />
+    <Compile Include="Configurations\EventsTableConfiguration.cs" />
+    <Compile Include="Configurations\EventStatusesTableConfiguration.cs" />
+    <Compile Include="Configurations\PermissionsTableConfiguration.cs" />
     <Compile Include="Configurations\RegionsTableConfiguration.cs" />
+    <Compile Include="Configurations\RolesTableConfiguration.cs" />
+    <Compile Include="Configurations\TagsTableConfiguration.cs" />
+    <Compile Include="Configurations\UserImagesTableConfiguration.cs" />
+    <Compile Include="Configurations\UsersTableConfiguration.cs" />
     <Compile Include="Contexts\GoPartyDbContext.cs" />
     <Compile Include="Conventions\ForeignKeyNamingConvention.cs" />
     <Compile Include="Entities\City.cs" />
     <Compile Include="Entities\Contact.cs" />
     <Compile Include="Entities\ContactType.cs" />
+    <Compile Include="Entities\Contract\IEntity.cs" />
+    <Compile Include="Entities\Contract\IWithNameEntity.cs" />
     <Compile Include="Entities\Country.cs" />
-    <Compile Include="Entities\Enums\ParentalUnitType.cs" />
     <Compile Include="Entities\Event.cs" />
-    <Compile Include="Entities\EventRequest.cs" />
-    <Compile Include="Entities\EventRequestStatus.cs" />
+    <Compile Include="Entities\EventImage.cs" />
     <Compile Include="Entities\EventStatus.cs" />
-    <Compile Include="Entities\EventSubscriber.cs" />
-    <Compile Include="Entities\EventSubscriptionType.cs" />
-    <Compile Include="Entities\ParentalUnit.cs" />
+    <Compile Include="Entities\UserImage.cs" />
     <Compile Include="Entities\Permission.cs" />
     <Compile Include="Entities\Region.cs" />
     <Compile Include="Entities\Role.cs" />
-    <Compile Include="Entities\RolePermission.cs" />
+    <Compile Include="Entities\Tag.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\UserRole.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

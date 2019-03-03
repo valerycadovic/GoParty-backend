@@ -1,13 +1,12 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using Repository.Configurations.Base;
 using Repository.Entities;
 
 namespace Repository.Configurations
 {
-    public class RegionsTableConfiguration : EntityTypeConfiguration<Region>
+    public class RegionsTableConfiguration : WithNameTableConfiguration<Region, int>
     {
-        public RegionsTableConfiguration()
+        public RegionsTableConfiguration() : base("Regions")
         {
-            ToTable("Regions").HasKey(e => e.Id);
             HasMany(e => e.Cities).WithRequired(e => e.Region);
         }
     }

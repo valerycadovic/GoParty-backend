@@ -1,13 +1,12 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using Repository.Configurations.Base;
 using Repository.Entities;
 
 namespace Repository.Configurations
 {
-    public class CitiesTableConfiguration : EntityTypeConfiguration<City>
+    public class CitiesTableConfiguration : WithNameTableConfiguration<City, int>
     {
-        public CitiesTableConfiguration()
+        public CitiesTableConfiguration() : base("Cities")
         {
-            ToTable("Cities").HasKey(e => e.Id);
         }
     }
 }

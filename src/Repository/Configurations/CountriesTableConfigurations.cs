@@ -1,13 +1,12 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using Repository.Configurations.Base;
 using Repository.Entities;
 
 namespace Repository.Configurations
 {
-    public class CountriesTableConfigurations : EntityTypeConfiguration<Country>
+    public class CountriesTableConfigurations : WithNameTableConfiguration<Country, short>
     {
-        public CountriesTableConfigurations()
+        public CountriesTableConfigurations() : base("Countries")
         {
-            ToTable("Countries").HasKey(e => e.Id);
             Property(e => e.Id).HasColumnType("SMALLINT");
             HasMany(e => e.Regions).WithRequired(e => e.Country);
         }

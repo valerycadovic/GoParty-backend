@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Repository.Entities.Contract;
 
 namespace Repository.Entities
 {
-    public class Country
+    public class Country : IWithNameEntity<short>
     {
         public short Id { get; set; }
 
