@@ -1,4 +1,5 @@
-﻿using Repository.Configurations.Base;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Repository.Configurations.Base;
 using Repository.Entities;
 
 namespace Repository.Configurations
@@ -7,6 +8,7 @@ namespace Repository.Configurations
     {
         public CitiesTableConfiguration() : base("Cities")
         {
+            Property(e => e.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
         }
     }
 }
