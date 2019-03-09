@@ -26,6 +26,8 @@ namespace Repository.Entities
 
         public virtual User ModifiedBy { get; set; }
 
+        public virtual ICollection<EventSubscriber> EventSubscribers { get; set; }
+
         public virtual City City { get; set; }
 
         public virtual EventStatus Status { get; set; }

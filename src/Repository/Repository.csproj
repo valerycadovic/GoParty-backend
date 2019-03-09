@@ -57,6 +57,8 @@
     <Compile Include="Configurations\EventImagesTableConfiguration.cs" />
     <Compile Include="Configurations\EventsTableConfiguration.cs" />
     <Compile Include="Configurations\EventStatusesTableConfiguration.cs" />
+    <Compile Include="Configurations\EventSubscribersTableConfiguration.cs" />
+    <Compile Include="Entities\EventSubscriber.cs" />
     <Compile Include="Configurations\PermissionsTableConfiguration.cs" />
     <Compile Include="Configurations\RegionsTableConfiguration.cs" />
     <Compile Include="Configurations\RolesTableConfiguration.cs" />

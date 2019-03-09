@@ -22,6 +22,8 @@ namespace Repository.Entities
 
         public virtual ICollection<Event> EventsModifiedBy { get; set; }
 
+        public virtual ICollection<EventSubscriber> EventsSubscribed { get; set; }
+
         public virtual ICollection<Role> Roles { get; set; }
 
         public virtual ICollection<Contact> Contacts { get; set; }
