@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Repository.Entities.Contract;
 
 namespace Repository.Entities
 {
-    public class User : IWithNameEntity<Guid>
+    public class User : IWithName
     {
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
 
         public string Login { get; set; }

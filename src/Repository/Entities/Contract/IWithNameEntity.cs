@@ -2,8 +2,8 @@
 
 namespace Repository.Entities.Contract
 {
-    public interface IWithNameEntity<T> : IEntity<T> where T : struct, IComparable<T>
+    public interface IWithNameEntity<T> : IEntity<T>, IWithName
+        where T : struct, IComparable<T>
     {
-        string Name { get; set; }
     }
 }
