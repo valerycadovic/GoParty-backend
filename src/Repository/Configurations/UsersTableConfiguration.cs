@@ -1,14 +1,16 @@
-﻿using System;
-using Repository.Configurations.Base;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 using Repository.Entities;
 
 namespace Repository.Configurations
 {
-    public class UsersTableConfiguration : WithNameTableConfiguration<User, Guid>
+    public class UsersTableConfiguration : EntityTypeConfiguration<User>
     {
-        public UsersTableConfiguration() : base("Users")
+        public UsersTableConfiguration()
         {
-            Property(e => e.Login).IsRequired();
+            ToTable("Users");
+            HasKey(e => e.Login);
+            Property(e => e.Login).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None).IsRequired();
             Property(e => e.Password).IsRequired();
             HasMany(e => e.Contacts).WithRequired(e => e.User);
             HasRequired(e => e.City).WithMany(e => e.Users);
