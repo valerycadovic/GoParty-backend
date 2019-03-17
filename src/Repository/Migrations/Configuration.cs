@@ -7,6 +7,7 @@ namespace Repository.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            //AutomaticMigrationDataLossAllowed = true;
             ContextKey = "ApplicationData";
         }
 

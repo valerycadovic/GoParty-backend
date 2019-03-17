@@ -12,7 +12,7 @@ namespace Repository.Configurations
             HasRequired(e => e.ModifiedBy).WithMany(e => e.EventsModifiedBy).WillCascadeOnDelete(false);
             HasRequired(e => e.Status).WithMany(e => e.Events);
             HasRequired(e => e.City).WithMany(e => e.Events);
-            HasRequired(e => e.Image).WithRequiredPrincipal();
+            HasOptional(e => e.Image).WithOptionalPrincipal();
             HasMany(e => e.Tags).WithMany(e => e.Events);
             Property(e => e.Address).IsRequired();
             Property(e => e.Description).IsRequired();
