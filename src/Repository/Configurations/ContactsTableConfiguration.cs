@@ -1,14 +1,13 @@
 ﻿using System;
 using Repository.Configurations.Base;
-using Repository.Entities;
+using Repository.Contract.Entities;
 
 namespace Repository.Configurations
 {
-    public class ContactsTableConfiguration : BaseTableConfiguration<Contact, Guid>
+    public class ContactsTableConfiguration : BaseTableConfiguration<ContactEntity, Guid>
     {
         public ContactsTableConfiguration() : base("Contacts")
         {
-            HasRequired(e => e.ContactType).WithMany(e => e.Contacts);
             Property(e => e.Value).IsRequired();
         }
     }
