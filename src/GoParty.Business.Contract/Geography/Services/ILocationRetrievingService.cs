@@ -8,10 +8,10 @@ namespace GoParty.Business.Contract.Geography.Services
     {
         Task<Location> GetById(int id);
 
-        Task<IEnumerable<Country>> GetCountries();
+        Task<List<Country>> GetCountries();
 
-        Task<IEnumerable<Region>> GetRegions(short countryId);
+        Task<List<Region>> GetRegions(short countryId);
 
-        Task<IEnumerable<City>> GetCities(int regionId);
+        Task<List<City>> GetCities(int regionId);
     }
 }

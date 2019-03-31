@@ -21,11 +21,9 @@ namespace GoParty.Business.Contract.Events.Models
 
         public ShortUser CreatedBy { get; set; }
 
-        public List<ShortUser> EventSubscribers { get; set; }
-
         public List<Tag> Tags { get; set; }
 
-        public string PhotoPath { get; set; }
+        public string Image { get; set; }
 
         public int QuantityJoined { get; set; }
     }

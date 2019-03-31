@@ -10,11 +10,11 @@ namespace Repository.Repositories.Base
 {
     public abstract class AbstractRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        public abstract Task<IEnumerable<TEntity>> GetAllAsync();
+        public abstract IQueryable<TEntity> GetAll();
 
-        public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter)
+        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter)
         {
-            return await GetAll().Where(filter).ToListAsync();
+            return GetAll().Where(filter);
         }
 
         public abstract Task AddAsync(TEntity entity);
@@ -30,6 +30,9 @@ namespace Repository.Repositories.Base
             return await GetAll().CountAsync(filter);
         }
 
-        protected abstract IQueryable<TEntity> GetAll();
+        public async Task<int> CountAsync()
+        {
+            return await GetAll().CountAsync();
+        }
     }
 }

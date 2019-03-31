@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="Entities\CityEntity.cs" />
     <Compile Include="Entities\ContactEntity.cs" />
-    <Compile Include="Entities\ContactType.cs" />
     <Compile Include="Entities\Contract\IEntity.cs" />
     <Compile Include="Entities\Contract\IWithName.cs" />
     <Compile Include="Entities\Contract\IWithNameEntity.cs" />

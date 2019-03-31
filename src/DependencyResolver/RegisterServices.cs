@@ -21,6 +21,7 @@ namespace DependencyResolver
             kernel.Bind<IRegionRepository>().To<RegionRepository>().InRequestScope();
             kernel.Bind<ICountryRepository>().To<CountryRepository>().InRequestScope();
             kernel.Bind<ILocationRetrievingService>().To<LocationService>().InRequestScope();
+            kernel.Bind<IUserRepository>().To<UserRepository>().InRequestScope();
         }
     }
 }

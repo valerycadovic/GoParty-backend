@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -7,9 +8,9 @@ namespace Repository.Contract.Repositories.Base
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        IQueryable<TEntity> GetAll();
 
-        Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter);
+        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter);
 
         Task AddAsync(TEntity entity);
 
@@ -20,5 +21,7 @@ namespace Repository.Contract.Repositories.Base
         Task AddRangeAsync(IEnumerable<TEntity> entities);
 
         Task<int> CountAsync(Expression<Func<TEntity, bool>> filter);
+
+        Task<int> CountAsync();
     }
 }

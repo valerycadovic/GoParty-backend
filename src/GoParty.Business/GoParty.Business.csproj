@@ -54,7 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contacts\Mappings\ContactsMapping.cs" />
+    <Compile Include="Core\Extensions\QueryableExtensions.cs" />
+    <Compile Include="Events\Models\EventWithQuantity.cs" />
+    <Compile Include="UserContacts\Mappings\ContactsMapping.cs" />
+    <Compile Include="UserContacts\Services\ContactsService.cs" />
     <Compile Include="Events\Mappings\EventsMappingProfile.cs" />
     <Compile Include="Geography\Mappings\LocationMappingProfile.cs" />
     <Compile Include="Geography\Services\LocationService.cs" />

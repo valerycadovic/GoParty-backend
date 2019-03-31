@@ -42,22 +42,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Services\IRetrievingService.cs" />
+    <Compile Include="Events\Models\EventWithSubscribers.cs" />
     <Compile Include="Geography\Models\City.cs" />
     <Compile Include="Geography\Models\Country.cs" />
     <Compile Include="Geography\Models\Region.cs" />
     <Compile Include="Geography\Services\ILocationRetrievingService.cs" />
-    <Compile Include="UserContacts\Models\Contacts.cs" />
+    <Compile Include="UserContacts\Models\Contact.cs" />
     <Compile Include="Events\Models\Event.cs" />
     <Compile Include="Events\Models\Tag.cs" />
     <Compile Include="Events\Services\IEventRetrievingService.cs" />
     <Compile Include="Geography\Models\Location.cs" />
     <Compile Include="Images\Models\ImageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserContacts\Models\ContactType.cs" />
+    <Compile Include="UserContacts\Services\IContactsRetrievingService.cs" />
     <Compile Include="Users\Models\ShortUser.cs" />
     <Compile Include="Users\Models\User.cs" />
+    <Compile Include="Users\Services\IUserRetrievingService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Users\Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

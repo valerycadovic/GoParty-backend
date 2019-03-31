@@ -18,7 +18,7 @@ namespace GoParty.WebApplication.Controllers
         [HttpGet]
         public async Task<List<Event>> GetAll()
         {
-            return await EventRetrievingService.GetAllAsync();
+            return await EventRetrievingService.GetBatchSortedByLocation(6);
         }
     }
 }

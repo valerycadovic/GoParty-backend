@@ -9,7 +9,7 @@ namespace Repository.Contract.Entities
 
         public string Value { get; set; }
 
-        public ContactType ContactType { get; set; }
+        public int ContactType { get; set; }
 
         public virtual UserEntity User { get; set; }
     }

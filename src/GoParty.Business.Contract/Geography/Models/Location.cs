@@ -2,12 +2,10 @@
 {
     public class Location
     {
-        public int Id { get; set; }
+        public City City { get; set; }
 
-        public string City { get; set; }
+        public Region Region { get; set; }
 
-        public string Region { get; set; }
-
-        public string Country { get; set; }
+        public Country Country { get; set; }
     }
 }

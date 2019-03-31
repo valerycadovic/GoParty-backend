@@ -18,9 +18,9 @@ namespace Repository.Repositories.Base
 
         protected DbSet<TEntity> Entities => _context.Set<TEntity>();
 
-        public override async Task<IEnumerable<TEntity>> GetAllAsync()
+        public override IQueryable<TEntity> GetAll()
         {
-            return await GetAll().ToListAsync();
+            return Entities;
         }
 
         public override async Task AddAsync(TEntity entity)
@@ -41,11 +41,6 @@ namespace Repository.Repositories.Base
         public override async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
             await Task.Run(() => Entities.AddRange(entities));
-        }
-
-        protected override IQueryable<TEntity> GetAll()
-        {
-            return Entities;
         }
 
         protected void Attach(TEntity entity, EntityState state)

@@ -9,14 +9,14 @@ namespace GoParty.Business.Contract.Users.Models
 
         public string Surname { get; set; }
 
-        public string Nickname { get; set; }
+        public string Username { get; set; }
 
         public string Email { get; set; }
 
         public Location Location { get; set; }
 
-        public string AvatarPath { get; set; }
+        public string Image { get; set; }
 
-        public Contacts Contacts { get; set; }
+        public Contact Contacts { get; set; }
     }
 }

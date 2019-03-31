@@ -8,7 +8,7 @@ namespace Repository.Configurations
     {
         public ContactsTableConfiguration() : base("Contacts")
         {
-            Property(e => e.Value).IsRequired();
+            Property(e => e.Value).IsRequired(); 
         }
     }
 }
