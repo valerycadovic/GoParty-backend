@@ -12,16 +12,18 @@ namespace Repository.Contract.Repositories.Base
 
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter);
 
-        Task AddAsync(TEntity entity);
+        TEntity Add(TEntity entity);
 
-        Task UpdateAsync(TEntity entity);
+        TEntity Update(TEntity entity);
 
-        Task DeleteAsync(TEntity entity);
+        TEntity Delete(TEntity entity);
 
-        Task AddRangeAsync(IEnumerable<TEntity> entities);
+        IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities);
 
         Task<int> CountAsync(Expression<Func<TEntity, bool>> filter);
 
         Task<int> CountAsync();
+
+        Task CommitAsync();
     }
 }

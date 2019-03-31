@@ -17,13 +17,15 @@ namespace Repository.Repositories.Base
             return GetAll().Where(filter);
         }
 
-        public abstract Task AddAsync(TEntity entity);
+        public abstract TEntity Add(TEntity entity);
 
-        public abstract Task UpdateAsync(TEntity entity);
+        public abstract TEntity Update(TEntity entity);
 
-        public abstract Task DeleteAsync(TEntity entity);
+        public abstract TEntity Delete(TEntity entity);
 
-        public abstract Task AddRangeAsync(IEnumerable<TEntity> entities);
+        public abstract IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities);
+
+        public abstract Task CommitAsync();
 
         public async Task<int> CountAsync(Expression<Func<TEntity, bool>> filter)
         {

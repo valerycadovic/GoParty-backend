@@ -23,30 +23,37 @@ namespace Repository.Repositories.Base
             return Entities;
         }
 
-        public override async Task AddAsync(TEntity entity)
+        public override TEntity Add(TEntity entity)
         {
-            await Task.Run(() => Attach(entity, EntityState.Added));
+            return Attach(entity, EntityState.Added);
         }
 
-        public override async Task UpdateAsync(TEntity entity)
+        public override TEntity Update(TEntity entity)
         {
-            await Task.Run(() => Attach(entity, EntityState.Modified));
+            return Attach(entity, EntityState.Modified);
         }
 
-        public override async Task DeleteAsync(TEntity entity)
+        public override TEntity Delete(TEntity entity)
         {
-            await Task.Run(() => Attach(entity, EntityState.Deleted));
+            return Attach(entity, EntityState.Deleted);
         }
 
-        public override async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        public override IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities)
         {
-            await Task.Run(() => Entities.AddRange(entities));
+            return Entities.AddRange(entities);
         }
 
-        protected void Attach(TEntity entity, EntityState state)
+        public override async Task CommitAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        protected TEntity Attach(TEntity entity, EntityState state)
         {
             Entities.Attach(entity);
             _context.Entry(entity).State = state;
+
+            return entity;
         }
     }
 }
