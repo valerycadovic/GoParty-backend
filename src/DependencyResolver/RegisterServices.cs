@@ -16,7 +16,7 @@ namespace DependencyResolver
         {
             kernel.Bind<GoPartyDbContext>().ToSelf().InSingletonScope();
             kernel.Bind<IEventRepository>().To<EventRepository>().InRequestScope();
-            kernel.Bind<IEventRetrievingService>().To<EventRetrievingService>().InRequestScope();
+            kernel.Bind<IEventRetrievingService, IEventModifyingService>().To<EventService>().InRequestScope();
             kernel.Bind<ICityRepository>().To<CityRepository>().InRequestScope();
             kernel.Bind<IRegionRepository>().To<RegionRepository>().InRequestScope();
             kernel.Bind<ICountryRepository>().To<CountryRepository>().InRequestScope();

@@ -1,6 +1,6 @@
 ﻿namespace Repository.Contract.Entities
 {
-    public enum EventStatusEntity
+    public enum EventStatus
     {
         Approved,
         Declined,

@@ -15,10 +15,21 @@ namespace GoParty.WebApplication.Controllers
         [Inject]
         public IEventRetrievingService EventRetrievingService { get; set; }
 
+        [Inject]
+        public IEventModifyingService EventModifyingService { get; set; }
+
         [HttpGet]
         public async Task<List<Event>> GetAll()
         {
             return await EventRetrievingService.GetBatchSortedByLocation(6);
+        }
+
+        [HttpPost]
+        public async Task<Event> AddEvent([FromBody] EventModifying e)
+        {
+            Event result = await EventModifyingService.AddAsync(e);
+
+            return result;
         }
     }
 }

@@ -62,7 +62,7 @@
     <Compile Include="Geography\Mappings\LocationMappingProfile.cs" />
     <Compile Include="Geography\Services\LocationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Events\Services\EventRetrievingService.cs" />
+    <Compile Include="Events\Services\EventService.cs" />
     <Compile Include="Users\Mappings\UsersMappingProfile.cs" />
   </ItemGroup>
   <ItemGroup>

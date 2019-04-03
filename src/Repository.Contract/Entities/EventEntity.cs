@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Contract.Entities.Contract;
 
 namespace Repository.Contract.Entities
@@ -21,6 +22,8 @@ namespace Repository.Contract.Entities
         public DateTime ModifiedOn { get; set; }
 
         public DateTime StartTime { get; set; }
+        
+        public string Image { get; set; }
 
         public virtual UserEntity CreatedBy { get; set; }
 
@@ -30,10 +33,8 @@ namespace Repository.Contract.Entities
 
         public virtual CityEntity City { get; set; }
 
-        public virtual EventStatusEntity Status { get; set; }
+        public virtual EventStatus Status { get; set; }
 
         public virtual ICollection<TagEntity> Tags { get; set; }
-        
-        public virtual ImageEntity Image { get; set; }
     }
 }

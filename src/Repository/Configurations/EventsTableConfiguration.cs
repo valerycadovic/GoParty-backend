@@ -11,7 +11,6 @@ namespace Repository.Configurations
             HasRequired(e => e.CreatedBy).WithMany(e => e.EventsCreatedBy).WillCascadeOnDelete(false);
             HasRequired(e => e.ModifiedBy).WithMany(e => e.EventsModifiedBy).WillCascadeOnDelete(false);
             HasRequired(e => e.City).WithMany(e => e.Events);
-            HasOptional(e => e.Image).WithOptionalDependent();
             HasMany(e => e.Tags).WithMany(e => e.Events);
             Property(e => e.Address).IsRequired();
             Property(e => e.Description).IsRequired();

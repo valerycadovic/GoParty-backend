@@ -25,8 +25,6 @@ namespace Repository.Contexts
 
         public DbSet<UserEntity> Users { get; set; }
 
-        public DbSet<ImageEntity> UserImages { get; set; }
-
         #endregion
 
         public GoPartyDbContext() : base("GoPartyDb")

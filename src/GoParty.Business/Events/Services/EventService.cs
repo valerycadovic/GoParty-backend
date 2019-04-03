@@ -15,7 +15,7 @@ using Repository.Contract.Repositories;
 
 namespace GoParty.Business.Events.Services
 {
-    public class EventRetrievingService : IEventRetrievingService
+    public class EventService : IEventRetrievingService, IEventModifyingService
     {
         #region Dependencies
 
@@ -23,15 +23,19 @@ namespace GoParty.Business.Events.Services
 
         private readonly ILocationRetrievingService _locationRetrievingService;
 
+        private readonly ICityRepository _cityRepository;
+
         private readonly IUserRepository _userRepository;
 
-        public EventRetrievingService(
+        public EventService(
             IEventRepository eventRepository,
             IUserRepository userRepository,
+            ICityRepository cityRepository,
             ILocationRetrievingService locationRetrievingService)
         {
             _eventRepository = eventRepository;
             _userRepository = userRepository;
+            _cityRepository = cityRepository;
             _locationRetrievingService = locationRetrievingService;
         }
 
@@ -89,12 +93,36 @@ namespace GoParty.Business.Events.Services
 
             var otherCountryEvents = events
                 .Where(e => e.City.Region.Country.Id == location.Country.Id)
-                .Except(regionEvents);
+                .Except(regionEvents);  
 
             var otherEvents = events
                 .Except(otherCountryEvents.Concat(regionEvents));
 
             return regionEvents.Concat(otherCountryEvents).Concat(otherEvents);
+        }
+
+        public async Task<Event> AddAsync(EventModifying @event)
+        {
+            UserEntity user = await _userRepository.GetByIdAsync(@event.CreatedById);
+            CityEntity city = await _cityRepository.GetByIdAsync(@event.Location.City.Id);
+
+            EventEntity eventEntity = Mapper.Map<EventModifying, EventEntity>(@event);
+
+            eventEntity.Status = EventStatus.Pending;
+            eventEntity.City = city;
+            eventEntity.CreatedBy = user;
+            eventEntity.ModifiedBy = user;
+
+            EventEntity result = _eventRepository.Add(eventEntity);
+
+            await _eventRepository.CommitAsync();
+
+            return Mapper.Map<EventEntity, Event>(result);
+        }
+
+        public async Task<Event> EditAsync(EventModifying @event)
+        {
+            throw new NotImplementedException();
         }
     }
 }

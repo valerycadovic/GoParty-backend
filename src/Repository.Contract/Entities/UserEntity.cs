@@ -18,9 +18,9 @@ namespace Repository.Contract.Entities
         
         public string Email { get; set; }
 
-        public virtual CityEntity City { get; set; }
+        public string Image { get; set; }
 
-        public virtual ImageEntity Image { get; set; }
+        public virtual CityEntity City { get; set; }
 
         public virtual ICollection<EventEntity> EventsCreatedBy { get; set; }
 

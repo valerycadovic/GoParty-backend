@@ -60,7 +60,6 @@
     <Compile Include="Configurations\RegionsTableConfiguration.cs" />
     <Compile Include="Configurations\RolesTableConfiguration.cs" />
     <Compile Include="Configurations\TagsTableConfiguration.cs" />
-    <Compile Include="Configurations\UserImagesTableConfiguration.cs" />
     <Compile Include="Configurations\UsersTableConfiguration.cs" />
     <Compile Include="Contexts\GoPartyDbContext.cs" />
     <Compile Include="Conventions\ForeignKeyNamingConvention.cs" />
@@ -80,7 +79,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Repository.Contract\Repository.Contract.csproj">
       <Project>{dbe335f8-d256-4f94-bbeb-a2c348f9c51f}</Project>

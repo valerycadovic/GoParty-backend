@@ -24,7 +24,6 @@ namespace Repository.Configurations
             HasMany(e => e.Contacts).WithRequired(e => e.User);
             HasRequired(e => e.City).WithMany(e => e.Users);
             HasMany(e => e.Roles).WithMany(e => e.Users);
-            HasOptional(e => e.Image).WithOptionalDependent();
         }
     }
 }
