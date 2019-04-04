@@ -21,7 +21,7 @@ namespace GoParty.WebApplication.Controllers
         [HttpGet]
         public async Task<List<Event>> GetAll()
         {
-            return await EventRetrievingService.GetBatchSortedByLocation(6);
+            return await EventRetrievingService.GetBatchSortedByLocation(0);
         }
 
         [HttpPost]

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using GoParty.Business.Contract.Core.Exceptions;
 using GoParty.Business.Contract.Geography.Models;
 using GoParty.Business.Contract.Geography.Services;
 using Repository.Contract.Entities;
@@ -19,7 +21,7 @@ namespace GoParty.Business.Geography.Services
         private readonly IRegionRepository _regionRepository;
 
         private readonly ICountryRepository _countryRepository;
-        
+
         public LocationService(
             ICityRepository cityRepository,
             IRegionRepository regionRepository,
@@ -35,6 +37,11 @@ namespace GoParty.Business.Geography.Services
         public async Task<Location> GetById(int id)
         {
             CityEntity city = await _cityRepository.GetByIdAsync(id);
+
+            if (city == null)
+            {
+                throw new MessageException("Current location not exists");
+            }
 
             return Mapper.Map<CityEntity, Location>(city);
         }
