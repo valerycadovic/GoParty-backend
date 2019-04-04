@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Exceptions\MessageException.cs" />
     <Compile Include="Core\Services\IRetrievingService.cs" />
     <Compile Include="Events\Models\EventModifying.cs" />
     <Compile Include="Events\Models\EventWithSubscribers.cs" />
