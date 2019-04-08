@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using GoParty.Business.Contract.Events.Models;
 using GoParty.Business.Events.Models;
-using EventData = Repository.Contract.Entities.EventEntity;
-using EventView = GoParty.Business.Contract.Events.Models.Event;
+using Repository.Contract.Entities;
+using GoParty.Business.Core.Extensions;
 
 namespace GoParty.Business.Events.Mappings
 {
@@ -11,19 +13,23 @@ namespace GoParty.Business.Events.Mappings
     {
         public EventsMappingProfile()
         {
-            CreateMap<EventData, EventView>()
+            CreateMap<EventEntity, Event>()
                 .ForMember(dest => dest.Location, opt => opt.MapFrom(e => e.City))
                 .ForMember(dest => dest.QuantityJoined, opt => opt.Ignore());
 
-            CreateMap<EventModifying, EventData>()
+            CreateMap<TagEntity, Tag>();
+            this.CreateMapFromId<int, TagEntity>();
+            
+            CreateMap<EventModifying, EventEntity>()
                 .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(e => DateTime.Now))
                 .ForMember(dest => dest.ModifiedOn, opt => opt.MapFrom(e => DateTime.Now))
+                .ForMember(dest => dest.City, opt => opt.MapFrom(e => e.Location))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(e => Guid.NewGuid()))
-                .ForMember(dest => dest.Tags, opt => opt.Ignore())
                 .ForMember(dest => dest.EventSubscribers, opt => opt.Ignore())
-                .ForMember(dest => dest.Comment, opt => opt.Ignore());
+                .ForMember(dest => dest.Comment, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore());
 
-            CreateMap<EventWithQuantity, EventView>()
+            CreateMap<EventWithQuantity, Event>()
                 .ForMember(dest => dest.QuantityJoined, opt => opt.MapFrom(e => e.QuantitySubscribed))
                 .ForMember(dest => dest.Location, opt => opt.MapFrom(e => e.Event.City))
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(e => e.Event.Address))

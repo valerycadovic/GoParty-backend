@@ -16,9 +16,9 @@ namespace GoParty.Business.Contract.Events.Models
 
         public DateTime StartTime { get; set; }
 
-        public Guid CreatedById { get; set; }
+        public Guid CreatedBy { get; set; }
 
-        public List<Tag> Tags { get; set; }
+        public List<int> Tags { get; set; }
 
         public string Image { get; set; }
     }

@@ -8,8 +8,7 @@ namespace GoParty.Business.UserContacts.Mappings
     {
         public ContactsMapping()
         {
-            CreateMap<ContactsData, ContactsView>()
-                .ForMember(dest => dest.Type, opt => opt.MapFrom(e => e.ContactType));
+            CreateMap<ContactsData, ContactsView>().ReverseMap();
         }
     }
 }

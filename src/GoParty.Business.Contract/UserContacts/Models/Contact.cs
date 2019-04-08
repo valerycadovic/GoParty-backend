@@ -2,7 +2,7 @@
 {
     public class Contact
     {
-        public ContactType Type { get; set; }
+        public ContactType ContactType { get; set; }
 
         public string Value { get; set; }
     }

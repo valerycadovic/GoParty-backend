@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Exceptions\MessageException.cs" />
-    <Compile Include="Core\Services\IMapper.cs" />
     <Compile Include="Events\Models\EventModifying.cs" />
     <Compile Include="Events\Models\EventWithSubscribers.cs" />
     <Compile Include="Events\Services\IEventModifyingService.cs" />

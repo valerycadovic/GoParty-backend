@@ -14,7 +14,7 @@ namespace DependencyResolver
     {
         public static void Register(IKernel kernel)
         {
-            kernel.Bind<GoPartyDbContext>().ToSelf().InSingletonScope();
+            kernel.Bind<GoPartyDbContext>().ToSelf().InRequestScope();
             kernel.Bind<IEventRepository>().To<EventRepository>().InRequestScope();
             kernel.Bind<IEventRetrievingService, IEventModifyingService>().To<EventService>().InRequestScope();
             kernel.Bind<ICityRepository>().To<CityRepository>().InRequestScope();

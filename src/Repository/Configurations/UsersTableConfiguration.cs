@@ -10,7 +10,7 @@ namespace Repository.Configurations
     {
         public UsersTableConfiguration() : base("Users")
         {
-            Property(p => p.Login)
+            Property(p => p.Username)
                 .HasColumnAnnotation("Index", new IndexAnnotation(new[] {
                         new IndexAttribute("Index") { IsUnique = true }
                     }
@@ -18,8 +18,7 @@ namespace Repository.Configurations
                 .HasMaxLength(50);
 
             Property(e => e.Surname).IsRequired();
-            Property(e => e.Login).IsRequired();
-            Property(e => e.Password).IsRequired();
+            Property(e => e.Username).IsRequired();
             Property(e => e.Email).IsRequired();
             HasMany(e => e.Contacts).WithRequired(e => e.User);
             HasRequired(e => e.City).WithMany(e => e.Users);
