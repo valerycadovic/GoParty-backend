@@ -10,7 +10,7 @@ namespace GoParty.Business.Contract.Users.Models
 
         public string Surname { get; set; }
 
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         public string Email { get; set; }
 

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using GoParty.Business.Contract.Geography.Models;
 using GoParty.Business.Contract.UserContacts.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GoParty.Business.Contract.Users.Models
 {
-    public class User
+    public class User : IUser<Guid>
     {
         public Guid Id { get; set;  }
 
@@ -13,7 +14,9 @@ namespace GoParty.Business.Contract.Users.Models
 
         public string Surname { get; set; }
 
-        public string Username { get; set; }
+        public string Password { get; set; }
+
+        public string UserName { get; set; }
 
         public string Email { get; set; }
 

@@ -1,7 +1,11 @@
-﻿using GoParty.Business.Contract.Events.Services;
+﻿using System;
+using GoParty.Business.Contract.Events.Services;
 using GoParty.Business.Contract.Geography.Services;
+using GoParty.Business.Contract.Users.Models;
 using GoParty.Business.Events.Services;
 using GoParty.Business.Geography.Services;
+using GoParty.Business.Users.Services;
+using Microsoft.AspNet.Identity;
 using Ninject;
 using Ninject.Web.Common;
 using Repository.Contexts;
@@ -15,6 +19,8 @@ namespace DependencyResolver
         public static void Register(IKernel kernel)
         {
             kernel.Bind<GoPartyDbContext>().ToSelf().InRequestScope();
+            kernel.Bind<IUserStore<User, Guid>>().To<UserService>().InRequestScope();
+            kernel.Bind<UserManager<User, Guid>>().To<UserManager>().InRequestScope();
             kernel.Bind<IEventRepository>().To<EventRepository>().InRequestScope();
             kernel.Bind<IEventRetrievingService, IEventModifyingService>().To<EventService>().InRequestScope();
             kernel.Bind<ICityRepository>().To<CityRepository>().InRequestScope();

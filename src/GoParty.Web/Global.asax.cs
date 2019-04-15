@@ -6,8 +6,7 @@ namespace GoParty.Web
     {
         protected void Application_Start()
         {
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-            MapperConfig.Configure();
+            
         }
     }
 }

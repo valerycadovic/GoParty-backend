@@ -1,20 +1,15 @@
 using System.Web.Http;
-using WebActivatorEx;
-using GoParty.Web;
 using Swashbuckle.Application;
-
-[assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
 namespace GoParty.Web
 {
     public class SwaggerConfig
     {
-        public static void Register()
+        public static void Register(HttpConfiguration config)
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
 
-            GlobalConfiguration.Configuration
-                .EnableSwagger(c =>
+            config.EnableSwagger(c =>
                     {
                         #region Generated Comments
                         // By default, the service root url is inferred from the request used to access the docs.

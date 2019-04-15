@@ -16,7 +16,7 @@ namespace Repository.Repositories
 
         public async Task<UserEntity> GetByUsernameAsync(string username)
         {
-            return await GetAll().SingleOrDefaultAsync(user => user.Username == username);
+            return await GetAll().SingleOrDefaultAsync(user => user.UserName == username);
         }
     }
 }
