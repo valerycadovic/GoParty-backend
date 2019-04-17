@@ -74,6 +74,34 @@ namespace GoParty.Business.Events.Services
             return eventWithQuantities.Select(Mapper.Map<EventWithQuantity, Event>).ToList();
         }
 
+        public async Task<Event> AddAsync(EventModifying @event)
+        {
+            try
+            {
+                EventEntity eventEntity = Mapper.Map<EventModifying, EventEntity>(@event);
+                eventEntity.Status = EventStatus.Pending;
+                UserEntity user = Mapper.Map<Guid, UserEntity>(@event.CreatedBy);
+
+                eventEntity.ModifiedBy = user;
+                eventEntity.CreatedBy = user;
+                
+                EventEntity result = _eventRepository.Add(eventEntity);
+                
+                await _eventRepository.CommitAsync();
+
+                return Mapper.Map<EventEntity, Event>(result);
+            }
+            catch (InvalidOperationException exception)
+            {
+                throw new MessageException("Error while adding event", exception);
+            }
+        }
+
+        public async Task<Event> EditAsync(EventModifying @event)
+        {
+            throw new NotImplementedException();
+        }
+
         private IQueryable<int> GetSubscribersCounts(IQueryable<EventEntity> eventEntities)
         {
             return eventEntities.Select(n => n.EventSubscribers.Count);
@@ -100,37 +128,6 @@ namespace GoParty.Business.Events.Services
                 .Except(otherCountryEvents.Concat(regionEvents));
 
             return regionEvents.Concat(otherCountryEvents).Concat(otherEvents);
-        }
-
-        public async Task<Event> AddAsync(EventModifying @event)
-        {
-            try
-            {
-                UserEntity user = await _userRepository.GetByIdAsync(@event.CreatedById);
-                CityEntity city = await _cityRepository.GetByIdAsync(@event.Location.City.Id);
-
-                EventEntity eventEntity = Mapper.Map<EventModifying, EventEntity>(@event);
-
-                eventEntity.Status = EventStatus.Pending;
-                eventEntity.City = city;
-                eventEntity.CreatedBy = user;
-                eventEntity.ModifiedBy = user;
-                
-                EventEntity result = _eventRepository.Add(eventEntity);
-                
-                await _eventRepository.CommitAsync();
-
-                return Mapper.Map<EventEntity, Event>(result);
-            }
-            catch (InvalidOperationException exception)
-            {
-                throw new MessageException("Error while adding event", exception);
-            }
-        }
-
-        public async Task<Event> EditAsync(EventModifying @event)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GoParty.Business.Contract.Geography.Models;
 using GoParty.Business.Contract.UserContacts.Models;
-using Microsoft.AspNet.Identity;
 
-namespace GoParty.Business.Contract.Users.Models
+namespace GoParty.Web.Models
 {
-    public class User : IUser<Guid>
+    public class RegisterModel
     {
-        public Guid Id { get; set;  }
-
         public string Name { get; set; }
 
         public string Surname { get; set; }

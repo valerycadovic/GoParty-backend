@@ -1,7 +1,8 @@
-﻿using AutoMapper;
-using UserData = Repository.Contract.Entities.UserEntity;
-using UserView = GoParty.Business.Contract.Users.Models.User;
-using ShortUserView = GoParty.Business.Contract.Users.Models.ShortUser;
+﻿using System;
+using AutoMapper;
+using GoParty.Business.Contract.Users.Models;
+using GoParty.Business.Core.Extensions;
+using Repository.Contract.Entities;
 
 namespace GoParty.Business.Users.Mappings
 {
@@ -9,11 +10,11 @@ namespace GoParty.Business.Users.Mappings
     {
         public UsersMappingProfile()
         {
-            CreateMap<UserData, UserView>()
-                .ForMember(dest => dest.Username, opt => opt.MapFrom(e => e.Login));
+            CreateMap<UserEntity, User>();
 
-            CreateMap<UserData, ShortUserView>()
-                .ForMember(dest => dest.Username, opt => opt.MapFrom(e => e.Login));
+            CreateMap<UserEntity, ShortUser>();
+
+            this.CreateMapFromId<Guid, UserEntity>();
         }
     }
 }
