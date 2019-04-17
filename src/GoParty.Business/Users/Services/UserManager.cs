@@ -8,6 +8,14 @@ namespace GoParty.Business.Users.Services
     {
         public UserManager(IUserStore<User, Guid> store) : base(store)
         {
+            PasswordValidator = new PasswordValidator
+            {
+                RequireDigit = true,
+                RequireLowercase = true,
+                RequireUppercase = true,
+                RequiredLength = 8,
+                RequireNonLetterOrDigit = false
+            };
         }
     }
 }

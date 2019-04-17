@@ -19,7 +19,7 @@ namespace DependencyResolver
         public static void Register(IKernel kernel)
         {
             kernel.Bind<GoPartyDbContext>().ToSelf().InRequestScope();
-            kernel.Bind<IUserStore<User, Guid>>().To<UserService>().InRequestScope();
+            kernel.Bind<IUserPasswordStore<User, Guid>, IUserStore<User, Guid>>().To<UserService>().InRequestScope();
             kernel.Bind<UserManager<User, Guid>>().To<UserManager>().InRequestScope();
             kernel.Bind<IEventRepository>().To<EventRepository>().InRequestScope();
             kernel.Bind<IEventRetrievingService, IEventModifyingService>().To<EventService>().InRequestScope();

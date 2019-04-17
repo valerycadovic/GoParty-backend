@@ -11,7 +11,7 @@ using Repository.Contract.Repositories;
 
 namespace GoParty.Business.Users.Services
 {
-    public class UserService : IUserRetrievingService, IUserStore<User, Guid>
+    public class UserService : IUserRetrievingService, IUserPasswordStore<User, Guid>
     {
         private readonly IUserRepository _userRepository;
 
@@ -87,12 +87,7 @@ namespace GoParty.Business.Users.Services
         public async Task<User> FindByNameAsync(string userName)
         {
             UserEntity userData = await _userRepository.GetByUsernameAsync(userName);
-
-            if (userData == null)
-            {
-                throw new MessageException($"user with {userName} not exists");
-            }
-
+            
             return Mapper.Map<UserEntity, User>(userData);
         }
 
@@ -106,6 +101,22 @@ namespace GoParty.Business.Users.Services
             userData.Surname = user.Surname;
             userData.Name = user.Name;
             userData.Password = user.Password;
+        }
+
+        public Task SetPasswordHashAsync(User user, string passwordHash)
+        {
+            user.Password = passwordHash;
+            return Task.FromResult(0);
+        }
+
+        public Task<string> GetPasswordHashAsync(User user)
+        {
+            return Task.FromResult(user.Password);
+        }
+
+        public Task<bool> HasPasswordAsync(User user)
+        {
+            return Task.FromResult(!string.IsNullOrEmpty(user.Password));
         }
     }
 }

@@ -16,12 +16,14 @@ namespace GoParty.Web.Controllers
         public IEventModifyingService EventModifyingService { get; set; }
 
         [HttpGet]
+        [Authorize]
         public async Task<List<Event>> GetAll()
         {
             return await EventRetrievingService.GetBatchSortedByLocation(0);
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<Event> AddEvent([FromBody] EventModifying e)
         {
             Event result = await EventModifyingService.AddAsync(e);
