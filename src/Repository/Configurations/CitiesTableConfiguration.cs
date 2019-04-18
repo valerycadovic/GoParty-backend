@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Repository.Configurations.Base;
-using Repository.Entities;
+using Repository.Contract.Entities;
 
 namespace Repository.Configurations
 {
-    public class CitiesTableConfiguration : WithNameTableConfiguration<City, int>
+    public class CitiesTableConfiguration : WithNameTableConfiguration<CityEntity, int>
     {
         public CitiesTableConfiguration() : base("Cities")
         {
