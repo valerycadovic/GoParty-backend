@@ -53,23 +53,20 @@ namespace GoParty.Business.Events.Services
             int cityId, int startIndex = 0, int? count = null)
         {
             Location location = await _locationRetrievingService.GetById(cityId);
-            var sortedEvents = GetAllSortedByLocation(location);
-
-            var result = sortedEvents;
+            var sortedEvents = await GetAllSortedByLocation(location).ToListAsync();
 
             if (count != null)
             {
-                result = sortedEvents.Batch(startIndex, count.Value);
+                sortedEvents = sortedEvents.Batch(startIndex, count.Value).ToList();
             }
 
-            var events = await result.ToListAsync();
-            var quantities = await GetSubscribersCounts(result).ToListAsync();
-
-            var eventWithQuantities = events.Zip(quantities, (e, q) => new EventWithQuantity
-            {
-                Event = e,
-                QuantitySubscribed = q
-            });
+            IEnumerable<EventWithQuantity> eventWithQuantities = sortedEvents.Zip(
+                sortedEvents.Select(e => e.EventSubscribers.Count),
+                (e, q) => new EventWithQuantity
+                {
+                    Event = e,
+                    QuantitySubscribed = q
+                });
 
             return eventWithQuantities.Select(Mapper.Map<EventWithQuantity, Event>).ToList();
         }
@@ -84,9 +81,9 @@ namespace GoParty.Business.Events.Services
 
                 eventEntity.ModifiedBy = user;
                 eventEntity.CreatedBy = user;
-                
+
                 EventEntity result = _eventRepository.Add(eventEntity);
-                
+
                 await _eventRepository.CommitAsync();
 
                 return Mapper.Map<EventEntity, Event>(result);
@@ -95,16 +92,6 @@ namespace GoParty.Business.Events.Services
             {
                 throw new MessageException("Error while adding event", exception);
             }
-        }
-
-        public async Task<Event> EditAsync(EventModifying @event)
-        {
-            throw new NotImplementedException();
-        }
-
-        private IQueryable<int> GetSubscribersCounts(IQueryable<EventEntity> eventEntities)
-        {
-            return eventEntities.Select(n => n.EventSubscribers.Count);
         }
 
         private IQueryable<EventEntity> GetAllSortedByLocation(Location location)

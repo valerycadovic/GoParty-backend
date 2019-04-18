@@ -25,7 +25,7 @@ namespace GoParty.Web.Controllers
             var (start, count) = ParseGetAllHeaders(Request.Headers);
 
             // GOPARTY-1: replace with CurrentUser.CityId
-            const int minskId = 303581;
+            const int minskId = 0;
 
             return await EventRetrievingService.GetBatchSortedByLocation(minskId, start, count);
         }
