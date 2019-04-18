@@ -54,7 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Extensions\QueryableExtensions.cs" />
+    <Compile Include="Core\Extensions\AutoMapperProfileExtensions.cs" />
+    <Compile Include="Core\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Events\Models\EventWithQuantity.cs" />
     <Compile Include="UserContacts\Mappings\ContactsMapping.cs" />
     <Compile Include="UserContacts\Services\ContactsService.cs" />

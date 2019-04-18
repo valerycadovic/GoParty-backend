@@ -55,28 +55,43 @@ namespace GoParty.Business.Events.Services
             Location location = await _locationRetrievingService.GetById(cityId);
             var sortedEvents = GetAllSortedByLocation(location);
 
-            var result = sortedEvents;
-
             if (count != null)
             {
                 result = sortedEvents.Batch(startIndex, count.Value);
             }
 
-            var events = await result.ToListAsync();
-            var quantities = await GetSubscribersCounts(result).ToListAsync();
-
-            var eventWithQuantities = events.Zip(quantities, (e, q) => new EventWithQuantity
-            {
-                Event = e,
-                QuantitySubscribed = q
-            });
+            IEnumerable<EventWithQuantity> eventWithQuantities = sortedEvents.Zip(
+                sortedEvents.Select(e => e.EventSubscribers.Count),
+                (e, q) => new EventWithQuantity
+                {
+                    Event = e,
+                    QuantitySubscribed = q
+                });
 
             return eventWithQuantities.Select(Mapper.Map<EventWithQuantity, Event>).ToList();
         }
 
-        private IQueryable<int> GetSubscribersCounts(IQueryable<EventEntity> eventEntities)
+        public async Task<Event> AddAsync(EventModifying @event)
         {
-            return eventEntities.Select(n => n.EventSubscribers.Count);
+            try
+            {
+                EventEntity eventEntity = Mapper.Map<EventModifying, EventEntity>(@event);
+                eventEntity.Status = EventStatus.Pending;
+                UserEntity user = Mapper.Map<Guid, UserEntity>(@event.CreatedBy);
+
+                eventEntity.ModifiedBy = user;
+                eventEntity.CreatedBy = user;
+
+                EventEntity result = _eventRepository.Add(eventEntity);
+
+                await _eventRepository.CommitAsync();
+
+                return Mapper.Map<EventEntity, Event>(result);
+            }
+            catch (InvalidOperationException exception)
+            {
+                throw new MessageException("Error while adding event", exception);
+            }
         }
 
         private IQueryable<EventEntity> GetAllSortedByLocation(Location location)
@@ -100,37 +115,6 @@ namespace GoParty.Business.Events.Services
                 .Except(otherCountryEvents.Concat(regionEvents));
 
             return regionEvents.Concat(otherCountryEvents).Concat(otherEvents);
-        }
-
-        public async Task<Event> AddAsync(EventModifying @event)
-        {
-            try
-            {
-                UserEntity user = await _userRepository.GetByIdAsync(@event.CreatedById);
-                CityEntity city = await _cityRepository.GetByIdAsync(@event.Location.City.Id);
-
-                EventEntity eventEntity = Mapper.Map<EventModifying, EventEntity>(@event);
-
-                eventEntity.Status = EventStatus.Pending;
-                eventEntity.City = city;
-                eventEntity.CreatedBy = user;
-                eventEntity.ModifiedBy = user;
-                
-                EventEntity result = _eventRepository.Add(eventEntity);
-                
-                await _eventRepository.CommitAsync();
-
-                return Mapper.Map<EventEntity, Event>(result);
-            }
-            catch (InvalidOperationException exception)
-            {
-                throw new MessageException("Error while adding event", exception);
-            }
-        }
-
-        public async Task<Event> EditAsync(EventModifying @event)
-        {
-            throw new NotImplementedException();
         }
     }
 }
