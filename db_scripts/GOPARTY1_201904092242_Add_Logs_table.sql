@@ -1,3 +1,5 @@
+create database LogsDb
+
 create table [dbo].[Logs]
 (
 	[Id] uniqueidentifier default newid() primary key,
