@@ -13,6 +13,8 @@ namespace GoParty.Web
 
     public static class NinjectWebCommon
     {
+        public static IKernel ApplicationKernel;
+
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
         private static HttpConfiguration config;
 
@@ -47,6 +49,7 @@ namespace GoParty.Web
                 RegisterServices(kernel);
                 config.DependencyResolver = new NinjectDependencyResolver(kernel);
 
+                ApplicationKernel = kernel;
                 return kernel;
             }
             catch

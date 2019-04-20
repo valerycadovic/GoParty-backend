@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using GoParty.Web.Handlers;
+using Microsoft.Owin.Security.OAuth;
 
 namespace GoParty.Web
 {
@@ -9,6 +10,9 @@ namespace GoParty.Web
         public static void Register(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
+
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
             config.Services.Replace(typeof(IExceptionHandler), new WebApiExceptionHandler());
 
             config.Routes.MapHttpRoute(

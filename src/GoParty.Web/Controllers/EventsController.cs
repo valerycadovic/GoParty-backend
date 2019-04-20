@@ -10,6 +10,7 @@ using Ninject;
 
 namespace GoParty.Web.Controllers
 {
+    [Authorize]
     public class EventsController : ApiController
     {
         [Inject]
@@ -19,7 +20,6 @@ namespace GoParty.Web.Controllers
         public IEventModifyingService EventModifyingService { get; set; }
 
         [HttpGet]
-        //[Authorize]
         public async Task<List<Event>> GetAll()
         {
             var (start, count) = ParseGetAllHeaders(Request.Headers);
@@ -31,7 +31,6 @@ namespace GoParty.Web.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
         public async Task<Event> AddEvent([FromBody] EventModifying e)
         {
             Event result = await EventModifyingService.AddAsync(e);
