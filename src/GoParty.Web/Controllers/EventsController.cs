@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.ServiceModel.Channels;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using GoParty.Business.Contract.Events.Models;
 using GoParty.Business.Contract.Events.Services;
+using GoParty.Business.Contract.Users.Models;
+using GoParty.Business.Contract.Users.Services;
+using Microsoft.AspNet.Identity;
 using Ninject;
 
 namespace GoParty.Web.Controllers
@@ -19,15 +24,19 @@ namespace GoParty.Web.Controllers
         [Inject]
         public IEventModifyingService EventModifyingService { get; set; }
 
+        [Inject]
+        public IUserRetrievingService UserRetrievingService { get; set; }
+
         [HttpGet]
         public async Task<List<Event>> GetAll()
         {
             var (start, count) = ParseGetAllHeaders(Request.Headers);
 
-            // GOPARTY-1: replace with CurrentUser.CityId
-            const int minskId = 0;
+            User currentUser = await UserRetrievingService.GetByUserName(User.Identity.Name);
 
-            return await EventRetrievingService.GetBatchSortedByLocation(minskId, start, count);
+            int cityId = currentUser.Location.City.Id;
+
+            return await EventRetrievingService.GetBatchSortedByLocation(cityId, start, count);
         }
 
         [HttpPost]
@@ -50,7 +59,7 @@ namespace GoParty.Web.Controllers
         {
             if (!int.TryParse(headerValue, out int result))
             {
-                throw new ArgumentException($"start header has invalid format {headerValue}");
+                throw new ArgumentException($"header has invalid format {headerValue}");
             }
 
             return result;

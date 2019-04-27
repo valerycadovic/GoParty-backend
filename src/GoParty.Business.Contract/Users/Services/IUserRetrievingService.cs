@@ -8,6 +8,8 @@ namespace GoParty.Business.Contract.Users.Services
     {
         Task<User> GetById(Guid id);
 
-        Task<ShortUser> GetShortByName(Guid id);
+        Task<ShortUser> GetShortById(Guid id);
+
+        Task<User> GetByUserName(string userName);
     }
 }

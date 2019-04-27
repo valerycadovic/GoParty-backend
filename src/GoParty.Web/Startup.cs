@@ -42,8 +42,8 @@ namespace GoParty.Web
                     NinjectWebCommon.ApplicationKernel.Get<UserManager<User, Guid>>())
             };
 
-            app.UseOAuthAuthorizationServer(oauthOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            app.UseOAuthAuthorizationServer(oauthOptions);
         }
     }
 }

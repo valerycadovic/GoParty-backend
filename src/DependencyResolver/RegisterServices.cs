@@ -2,6 +2,7 @@
 using GoParty.Business.Contract.Events.Services;
 using GoParty.Business.Contract.Geography.Services;
 using GoParty.Business.Contract.Users.Models;
+using GoParty.Business.Contract.Users.Services;
 using GoParty.Business.Events.Services;
 using GoParty.Business.Geography.Services;
 using GoParty.Business.Users.Services;
@@ -28,6 +29,7 @@ namespace DependencyResolver
             kernel.Bind<ICountryRepository>().To<CountryRepository>().InRequestScope();
             kernel.Bind<ILocationRetrievingService>().To<LocationService>().InRequestScope();
             kernel.Bind<IUserRepository>().To<UserRepository>().InRequestScope();
+            kernel.Bind<IUserRetrievingService>().To<UserService>().InRequestScope();
         }
     }
 }

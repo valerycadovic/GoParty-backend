@@ -26,10 +26,16 @@ namespace GoParty.Business.Users.Services
             return Mapper.Map<UserEntity, User>(user);
         }
 
-        public async Task<ShortUser> GetShortByName(Guid id)
+        public async Task<ShortUser> GetShortById(Guid id)
         {
             UserEntity user = await GetInternal(id);
             return Mapper.Map<UserEntity, ShortUser>(user);
+        }
+
+        public async Task<User> GetByUserName(string userName)
+        {
+            UserEntity user = await _userRepository.GetByUsernameAsync(userName);
+            return Mapper.Map<UserEntity, User>(user);
         }
 
         private async Task<UserEntity> GetInternal(Guid id)

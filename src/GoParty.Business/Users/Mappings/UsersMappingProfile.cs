@@ -10,7 +10,8 @@ namespace GoParty.Business.Users.Mappings
     {
         public UsersMappingProfile()
         {
-            CreateMap<UserEntity, User>();
+            CreateMap<UserEntity, User>()
+                .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.City));
 
             CreateMap<UserEntity, ShortUser>();
 
