@@ -27,7 +27,7 @@ namespace GoParty.Web.Providers
             }
             
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            identity.AddClaim(new Claim("userName", context.UserName));
+            identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
 
             context.Validated(identity);
         }
