@@ -30,6 +30,7 @@ namespace DependencyResolver
             kernel.Bind<ILocationRetrievingService>().To<LocationService>().InRequestScope();
             kernel.Bind<IUserRepository>().To<UserRepository>().InRequestScope();
             kernel.Bind<IUserRetrievingService>().To<UserService>().InRequestScope();
+            kernel.Bind<ISubscribeOnEventService>().To<SubscribeOnEventService>().InRequestScope();
         }
     }
 }
