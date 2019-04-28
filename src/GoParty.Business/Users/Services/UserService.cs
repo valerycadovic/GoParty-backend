@@ -11,7 +11,7 @@ using Repository.Contract.Repositories;
 
 namespace GoParty.Business.Users.Services
 {
-    public class UserService : IUserRetrievingService, IUserPasswordStore<User, Guid>
+    public class UserService : IUserRetrievingService, IUserPasswordStore<User, Guid>, IUserModifyingService
     {
         private readonly IUserRepository _userRepository;
 
@@ -61,19 +61,27 @@ namespace GoParty.Business.Users.Services
         {
             UserEntity userData = new UserEntity();
             FillUserData(userData, user);
+            userData.Id = Guid.NewGuid();
 
             _userRepository.Add(userData);
 
             await _userRepository.CommitAsync();
         }
 
-        public async Task UpdateAsync(User user)
+        async Task IUserStore<User, Guid>.UpdateAsync(User user)
+        {
+            await UpdateAsync(user);
+        }
+        
+        public async Task<User> UpdateAsync(User user)
         {
             UserEntity userData = await _userRepository.GetByIdAsync(user.Id);
             FillUserData(userData, user);
-
+            
             _userRepository.Update(userData);
             await _userRepository.CommitAsync();
+
+            return Mapper.Map<UserEntity, User>(userData);
         }
 
         public async Task DeleteAsync(User user)
@@ -100,7 +108,7 @@ namespace GoParty.Business.Users.Services
         private void FillUserData(UserEntity userData, User user)
         {
             userData.City = Mapper.Map<Location, CityEntity>(user.Location);
-            userData.Id = Guid.NewGuid();
+            userData.Id = user.Id;
             userData.Email = user.Email;
             userData.Image = user.Image;
             userData.UserName = user.UserName;

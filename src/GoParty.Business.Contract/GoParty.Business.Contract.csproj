@@ -64,6 +64,7 @@
     <Compile Include="UserContacts\Services\IContactsRetrievingService.cs" />
     <Compile Include="Users\Models\ShortUser.cs" />
     <Compile Include="Users\Models\User.cs" />
+    <Compile Include="Users\Services\IUserModifyingService.cs" />
     <Compile Include="Users\Services\IUserRetrievingService.cs" />
   </ItemGroup>
   <ItemGroup>
