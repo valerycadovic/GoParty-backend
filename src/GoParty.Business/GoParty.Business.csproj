@@ -69,6 +69,7 @@
     <Compile Include="Core\Extensions\AutoMapperProfileExtensions.cs" />
     <Compile Include="Core\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Events\Models\EventWithQuantity.cs" />
+    <Compile Include="Events\Services\SubscribeOnEventService.cs" />
     <Compile Include="UserContacts\Mappings\ContactsMapping.cs" />
     <Compile Include="UserContacts\Services\ContactsService.cs" />
     <Compile Include="Events\Mappings\EventsMappingProfile.cs" />
