@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using System.Threading.Tasks;
 using GoParty.Business.Contract.Core.Exceptions;
 using GoParty.Business.Contract.Events.Services;
+using GoParty.Business.Contract.Users.Models;
 using Repository.Contract.Entities;
 using Repository.Contract.Repositories;
 
@@ -64,6 +67,21 @@ namespace GoParty.Business.Events.Services
             user.EventsSubscribed.Remove(eventSubscriber);
 
             await _userRepository.CommitAsync();
+        }
+
+        public async Task<List<User>> GetSubscribers(Guid eventId)
+        {
+            EventEntity eventEntity = await _eventRepository.GetByIdAsync(eventId);
+
+            if (eventEntity is null)
+            {
+                throw new MessageException($"event with id {eventId} not exists");
+            }
+
+            return eventEntity.EventSubscribers
+                .Select(es => es.Subscriber)
+                .Select(Mapper.Map<UserEntity, User>)
+                .ToList();
         }
     }
 }
