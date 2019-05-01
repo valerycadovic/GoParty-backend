@@ -4,10 +4,12 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
+using AutoMapper;
 using GoParty.Business.Contract.Events.Models;
 using GoParty.Business.Contract.Events.Services;
 using GoParty.Business.Contract.Users.Models;
 using GoParty.Business.Contract.Users.Services;
+using GoParty.Web.Models;
 using Ninject;
 
 namespace GoParty.Web.Controllers
@@ -70,6 +72,15 @@ namespace GoParty.Web.Controllers
             User currentUser = await UserRetrievingService.GetByUserName(User.Identity.Name);
 
             await SubscribeOnEventService.Unsubscribe(currentUser.Id, eventId);
+        }
+
+        [HttpGet]
+        [Route("Subscribers/{eventId:guid}")]
+        public async Task<List<ProfileModel>> GetAllSubscribers([FromUri] Guid eventId)
+        {
+            List<User> subscribers = await SubscribeOnEventService.GetSubscribers(eventId);
+
+            return subscribers.Select(Mapper.Map<User, ProfileModel>).ToList();
         }
 
         private (int start, int? count) ParseGetAllHeaders(HttpRequestHeaders headers)
