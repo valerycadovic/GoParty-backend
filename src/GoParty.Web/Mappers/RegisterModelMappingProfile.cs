@@ -10,6 +10,10 @@ namespace GoParty.Web.Mappers
         {
             CreateMap<RegisterModel, User>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<User, ProfileModel>()
+                .ForMember(dest => dest.IsSelf, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 }

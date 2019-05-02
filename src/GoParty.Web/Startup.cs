@@ -1,9 +1,13 @@
 ﻿using System;
 using System.DirectoryServices;
 using System.Web.Http;
+using GoParty.Business.Contract.Users.Models;
+using GoParty.Web.Providers;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
+using Ninject;
 using Owin;
 
 [assembly: OwinStartup(typeof(GoParty.Web.Startup))]
@@ -15,28 +19,31 @@ namespace GoParty.Web
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
+            NinjectWebCommon.Start(config);
+
+            ConfigureAuth(app);
 
             SwaggerConfig.Register(config);
             WebApiConfig.Register(config);
-            NinjectWebCommon.Start(config);
             MapperConfig.Configure();
 
             app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(config);
+        }
 
+        private void ConfigureAuth(IAppBuilder app)
+        {
             var oauthOptions = new OAuthAuthorizationServerOptions
             {
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
                 AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/api/token"),
-                Provider = new OAuthAuthorizationServerProvider(),
-                AuthorizeEndpointPath = new PathString("/api/authorize")
+                TokenEndpointPath = new PathString("/Token"),
+                Provider = new ApplicationOauthProvider(
+                    NinjectWebCommon.ApplicationKernel.Get<UserManager<User, Guid>>())
             };
-            
-            app.UseOAuthAuthorizationServer(oauthOptions);
 
-            config.SuppressDefaultHostAuthentication();
-            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            app.UseOAuthAuthorizationServer(oauthOptions);
         }
     }
 }

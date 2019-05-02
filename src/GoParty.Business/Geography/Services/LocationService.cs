@@ -48,23 +48,23 @@ namespace GoParty.Business.Geography.Services
 
         public async Task<List<Country>> GetCountries()
         {
-            var countries = _countryRepository.GetAll();
+            List<CountryEntity> countries = await _countryRepository.GetAll().ToListAsync();
 
-            return await countries.Select(n => Mapper.Map<CountryEntity, Country>(n)).ToListAsync();
+            return countries.Select(Mapper.Map<CountryEntity, Country>).ToList();
         }
 
         public async Task<List<Region>> GetRegions(short countryId)
         {
-            var regions = _regionRepository.Get(r => r.Country.Id == countryId);
-
-            return await regions.Select(n => Mapper.Map<RegionEntity, Region>(n)).ToListAsync();
+            List<RegionEntity> regions = await _regionRepository.Get(r => r.Country.Id == countryId).ToListAsync();
+            
+            return regions.Select(Mapper.Map<RegionEntity, Region>).ToList();
         }
 
         public async Task<List<City>> GetCities(int regionId)
         {
-            var cities = _cityRepository.Get(c => c.Region.Id == regionId);
+            var cities = await _cityRepository.Get(c => c.Region.Id == regionId).ToListAsync();
 
-            return await cities.Select(n => Mapper.Map<CityEntity, City>(n)).ToListAsync();
+            return cities.Select(Mapper.Map<CityEntity, City>).ToList();
         }
     }
 }

@@ -53,7 +53,7 @@ namespace GoParty.Business.Events.Services
             int cityId, int startIndex = 0, int? count = null)
         {
             Location location = await _locationRetrievingService.GetById(cityId);
-            var sortedEvents = await GetAllSortedByLocation(location).ToListAsync();
+            var sortedEvents = await GetAllSortedByLocationAsync(location);
 
             if (count != null)
             {
@@ -94,27 +94,35 @@ namespace GoParty.Business.Events.Services
             }
         }
 
-        private IQueryable<EventEntity> GetAllSortedByLocation(Location location)
+        private async Task<List<EventEntity>> GetAllSortedByLocationAsync(Location location)
         {
-            var events = _eventRepository.GetAll();
+            var events = await _eventRepository.GetAll().ToListAsync();
 
             var cityEvents = events
-                .Where(e => e.City.Id == location.City.Id);
+                .Where(e => e.City.Id == location.City.Id)
+                .OrderByDescending(e => e.EventSubscribers.Count)
+                .ToList();
 
             var otherRgionEvents = events
                 .Where(e => e.City.Region.Id == location.Region.Id)
-                .Except(cityEvents);
+                .Except(cityEvents)
+                .OrderByDescending(e => e.EventSubscribers.Count)
+                .ToList();
 
-            var regionEvents = cityEvents.Concat(otherRgionEvents);
+            var regionEvents = cityEvents.Concat(otherRgionEvents).ToList();
 
             var otherCountryEvents = events
                 .Where(e => e.City.Region.Country.Id == location.Country.Id)
-                .Except(regionEvents);
+                .Except(regionEvents)
+                .OrderByDescending(e => e.EventSubscribers.Count)
+                .ToList();
 
             var otherEvents = events
-                .Except(otherCountryEvents.Concat(regionEvents));
+                .Except(otherCountryEvents.Concat(regionEvents))
+                .OrderByDescending(e => e.EventSubscribers.Count)
+                .ToList();
 
-            return regionEvents.Concat(otherCountryEvents).Concat(otherEvents);
+            return regionEvents.Concat(otherCountryEvents).Concat(otherEvents).ToList();
         }
     }
 }

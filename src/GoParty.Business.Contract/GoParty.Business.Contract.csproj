@@ -48,6 +48,7 @@
     <Compile Include="Events\Models\EventModifying.cs" />
     <Compile Include="Events\Models\EventWithSubscribers.cs" />
     <Compile Include="Events\Services\IEventModifyingService.cs" />
+    <Compile Include="Events\Services\ISubscribeOnEventService.cs" />
     <Compile Include="Geography\Models\City.cs" />
     <Compile Include="Geography\Models\Country.cs" />
     <Compile Include="Geography\Models\Region.cs" />

@@ -26,10 +26,16 @@ namespace GoParty.Business.Users.Services
             return Mapper.Map<UserEntity, User>(user);
         }
 
-        public async Task<ShortUser> GetShortByName(Guid id)
+        public async Task<ShortUser> GetShortById(Guid id)
         {
             UserEntity user = await GetInternal(id);
             return Mapper.Map<UserEntity, ShortUser>(user);
+        }
+
+        public async Task<User> GetByUserName(string userName)
+        {
+            UserEntity user = await _userRepository.GetByUsernameAsync(userName);
+            return Mapper.Map<UserEntity, User>(user);
         }
 
         private async Task<UserEntity> GetInternal(Guid id)
@@ -55,17 +61,18 @@ namespace GoParty.Business.Users.Services
         {
             UserEntity userData = new UserEntity();
             FillUserData(userData, user);
+            userData.Id = Guid.NewGuid();
 
             _userRepository.Add(userData);
 
             await _userRepository.CommitAsync();
         }
-
+        
         public async Task UpdateAsync(User user)
         {
             UserEntity userData = await _userRepository.GetByIdAsync(user.Id);
             FillUserData(userData, user);
-
+            
             _userRepository.Update(userData);
             await _userRepository.CommitAsync();
         }
@@ -93,8 +100,8 @@ namespace GoParty.Business.Users.Services
 
         private void FillUserData(UserEntity userData, User user)
         {
-            userData.City = Mapper.Map<Location, CityEntity>(user.Location);
-            userData.Id = Guid.NewGuid();
+            userData.City = Mapper.Map(user.Location, userData.City);
+            userData.Id = user.Id;
             userData.Email = user.Email;
             userData.Image = user.Image;
             userData.UserName = user.UserName;

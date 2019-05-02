@@ -4,39 +4,83 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
+using AutoMapper;
 using GoParty.Business.Contract.Events.Models;
 using GoParty.Business.Contract.Events.Services;
+using GoParty.Business.Contract.Users.Models;
+using GoParty.Business.Contract.Users.Services;
+using GoParty.Web.Models;
 using Ninject;
 
 namespace GoParty.Web.Controllers
 {
+    [Authorize]
+    [RoutePrefix("api/Events")]
     public class EventsController : ApiController
     {
+        #region Dependencies
+
         [Inject]
         public IEventRetrievingService EventRetrievingService { get; set; }
 
         [Inject]
         public IEventModifyingService EventModifyingService { get; set; }
 
+        [Inject]
+        public IUserRetrievingService UserRetrievingService { get; set; }
+
+        [Inject]
+        public ISubscribeOnEventService SubscribeOnEventService { get; set; }
+
+        #endregion
+
         [HttpGet]
-        //[Authorize]
+        [Route("")]
         public async Task<List<Event>> GetAll()
         {
             var (start, count) = ParseGetAllHeaders(Request.Headers);
 
-            // GOPARTY-1: replace with CurrentUser.CityId
-            const int minskId = 0;
+            User currentUser = await UserRetrievingService.GetByUserName(User.Identity.Name);
 
-            return await EventRetrievingService.GetBatchSortedByLocation(minskId, start, count);
+            int cityId = currentUser.Location.City.Id;
+
+            return await EventRetrievingService.GetBatchSortedByLocation(cityId, start, count);
         }
 
         [HttpPost]
-        //[Authorize]
+        [Route("")]
         public async Task<Event> AddEvent([FromBody] EventModifying e)
         {
             Event result = await EventModifyingService.AddAsync(e);
 
             return result;
+        }
+
+        [HttpPost]
+        [Route("Subscribe/{eventId:guid}")]
+        public async Task SubscribeOnEvent([FromUri] Guid eventId)
+        {
+            User currentUser = await UserRetrievingService.GetByUserName(User.Identity.Name);
+
+            await SubscribeOnEventService.Subscribe(currentUser.Id, eventId);
+        }
+
+        [HttpPost]
+        [Route("Unsubscribe/{eventId:guid}")]
+        public async Task UnsubscribeFromEvent([FromUri] Guid eventId)
+        {
+            User currentUser = await UserRetrievingService.GetByUserName(User.Identity.Name);
+
+            await SubscribeOnEventService.Unsubscribe(currentUser.Id, eventId);
+        }
+
+        [HttpGet]
+        [Route("Subscribers/{eventId:guid}")]
+        public async Task<List<ProfileModel>> GetAllSubscribers([FromUri] Guid eventId)
+        {
+            List<User> subscribers = await SubscribeOnEventService.GetSubscribers(eventId);
+
+            return subscribers.Select(Mapper.Map<User, ProfileModel>).ToList();
         }
 
         private (int start, int? count) ParseGetAllHeaders(HttpRequestHeaders headers)
@@ -51,7 +95,7 @@ namespace GoParty.Web.Controllers
         {
             if (!int.TryParse(headerValue, out int result))
             {
-                throw new ArgumentException($"start header has invalid format {headerValue}");
+                throw new ArgumentException($"header has invalid format {headerValue}");
             }
 
             return result;
