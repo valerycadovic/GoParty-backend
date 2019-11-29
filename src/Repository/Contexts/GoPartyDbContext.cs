@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity;
-using Repository.Entities;
+using Repository.Contract.Entities;
 
 namespace Repository.Contexts
 {
@@ -7,31 +7,23 @@ namespace Repository.Contexts
     {
         #region Tables
 
-        public DbSet<City> Cities { get; set; }
+        public DbSet<CityEntity> Cities { get; set; }
 
-        public DbSet<Region> Regions { get; set; }
+        public DbSet<RegionEntity> Regions { get; set; }
 
-        public DbSet<Country> Countries { get; set; }
+        public DbSet<CountryEntity> Countries { get; set; }
 
-        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ContactEntity> Contacts { get; set; }
 
-        public DbSet<ContactType> ContactTypes { get; set; }
+        public DbSet<EventEntity> Events { get; set; }
 
-        public DbSet<Event> Events { get; set; }
+        public DbSet<PermissionEntity> Permissions { get; set; }
 
-        public DbSet<EventImage> EventImages { get; set; }
+        public DbSet<RoleEntity> Roles { get; set; }
 
-        public DbSet<EventStatus> EventStatuses { get; set; }
+        public DbSet<TagEntity> Tags { get; set; }
 
-        public DbSet<Permission> Permissions { get; set; }
-
-        public DbSet<Role> Roles { get; set; }
-
-        public DbSet<Tag> Tags { get; set; }
-
-        public DbSet<User> Users { get; set; }
-
-        public DbSet<UserImage> UserImages { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
         #endregion
 

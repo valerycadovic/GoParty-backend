@@ -1,10 +1,10 @@
 ﻿using System;
 using Repository.Configurations.Base;
-using Repository.Entities;
+using Repository.Contract.Entities;
 
 namespace Repository.Configurations
 {
-    public class EventSubscribersTableConfiguration : BaseTableConfiguration<EventSubscriber, Guid>
+    public class EventSubscribersTableConfiguration : BaseTableConfiguration<EventSubscriberEntity, Guid>
     {
         public EventSubscribersTableConfiguration() : base("EventSubscribers")
         {

@@ -1,22 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration;
-using Repository.Entities;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
+using Repository.Configurations.Base;
+using Repository.Contract.Entities;
 
 namespace Repository.Configurations
 {
-    public class UsersTableConfiguration : EntityTypeConfiguration<User>
+    public class UsersTableConfiguration : WithNameTableConfiguration<UserEntity, Guid>
     {
-        public UsersTableConfiguration()
+        public UsersTableConfiguration() : base("Users")
         {
-            ToTable("Users");
-            HasKey(e => e.Login);
-            Property(e => e.Login).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None).IsRequired();
+            Property(p => p.Login)
+                .HasColumnAnnotation("Index", new IndexAnnotation(new[] {
+                        new IndexAttribute("Index") { IsUnique = true }
+                    }
+                ))
+                .HasMaxLength(50);
+
+            Property(e => e.Surname).IsRequired();
+            Property(e => e.Login).IsRequired();
             Property(e => e.Password).IsRequired();
             Property(e => e.Email).IsRequired();
             HasMany(e => e.Contacts).WithRequired(e => e.User);
             HasRequired(e => e.City).WithMany(e => e.Users);
             HasMany(e => e.Roles).WithMany(e => e.Users);
-            HasOptional(e => e.Image).WithOptionalDependent();
         }
     }
 }
